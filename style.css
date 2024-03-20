@@ -1,7 +1,79 @@
-.w-sign_container {
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.link {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.w-auth_container {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("/img/chuttersnap-9cCeS9Sg6nU-unsplash.jpg");
+  border-image-repeat: no-repeat;
+  background-size: cover;
+}
+
+.auth_container {
+  border: 0.2rem solid #ffae5d;
+  padding: 3rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  border-radius: 1.5rem;
+  background-color: #fff;
+}
+
+.auth_inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.auth_input {
+  display: block;
+  border: 1px solid #4d4d4d;
+  padding: 0.2rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+
+.auth_radios,
+.auth_input {
+  margin-top: 0.25rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  background-color: #4d4d4d;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn p,
+.btn a {
+  padding: 0.4rem;
+}
+
+.btn:hover {
+  color: #ffae5d;
+}
+
+.btn:hover a {
+  color: #ffae5d;
+}
+
+.auth_text {
+  font-size: 1.15rem;
+}
+
+.auth_forgot {
+  font-size: 1rem;
 }

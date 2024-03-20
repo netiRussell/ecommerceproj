@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <!-- 
+  Color code:
+  orange - #FFAE5D
+  gray - #404040
+  red - #FF3232
+  white - #FFFFFF
+  -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>replit</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <form class="w-auth_container" action="/action_page.php" method="post">
+      <div class="auth_container">
+        <div class="auth_inputs">
+          <div class="section_auth">
+            <label for="fname" class="auth_text">First name </label>
+            <input type="text" class="auth_input" placeholder="First name" name="fname" required />
+          </div>
+
+          <div class="section_auth">
+            <label for="lname" class="auth_text">Last name </label>
+            <input type="text" class="auth_input" placeholder="Last name" name="lname" required />
+          </div>
+
+          <div class="section_auth">
+            <label for="uname" class="auth_text">Username </label>
+            <input type="text" class="auth_input" placeholder="Username" name="uname" required />
+          </div>
+
+          <div class="section_auth">
+            <label for="psw" class="auth_text">Password </label>
+            <input type="password" class="auth_input" placeholder="Password" name="psw" required />
+            <input type="password" class="auth_input" placeholder="Re-enter password" name="cpsw" required />
+          </div>
+
+          <div class="section_auth">
+            <label for="email" class="auth_text">Email</label>
+            <input type="text" class="auth_input" placeholder="Email" name="email" required />
+          </div>
+
+          <div class="section_auth">
+            <p class="auth_text">Are you a Buyer or a Seller?</p>
+
+            <div class="auth_radios">
+              <input type="radio" name="account_type" value="Buyer" /> <label for="account_type">Buyer</label><br />
+              <input type="radio" name="account_type" value="Seller" />
+              <label for="account_type">Seller</label>
+            </div>
+          </div>
+
+          <div class="section_auth">
+            <button type="submit" class="btn"><p>Sign-up</p></button>
+            <button type="button" class="btn cancelbtn"><a class="link" href="/signin.html">Cancel</a></button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
