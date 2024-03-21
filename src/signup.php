@@ -10,7 +10,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>replit</title>
+    <title>Ecommerce</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
 
@@ -56,7 +56,7 @@
 
           <div class="section_auth">
             <button type="submit" class="btn"><p>Sign-up</p></button>
-            <button type="button" class="btn cancelbtn"><a class="link" href="/signin.html">Cancel</a></button>
+            <button type="button" class="btn cancelbtn"><a class="link" href="/signin">Cancel</a></button>
           </div>
         </div>
       </div>
