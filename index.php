@@ -9,7 +9,9 @@
   <?php
     $uri = $_SERVER['REQUEST_URI'];
 
-    if( $uri == '/signup' ){
+    if( $uri == '/' ){
+      echo 'Home page - to be created';
+    } else if( $uri == '/signup' ){
       include "./src/signup.php";
     } else if( $uri == '/signin' ){
       include "./src/signin.php";

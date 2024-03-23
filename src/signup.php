@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <form id="signup_form" class="w-auth_container" action="/action_page.php" method="post">
+    <form id="signup_form" class="w-auth_container" action="#" method="post">
       <div class="auth_container">
         <div class="auth_inputs">
           <div class="section_auth">
@@ -55,10 +55,12 @@
           </div>
 
           <div class="section_auth">
-            <button type="submit" class="btn"><p>Sign-up</p></button>
-            <button type="button" class="btn cancelbtn"><a class="link" href="/signin">Cancel</a></button>
+            <button id="singup_btn" type="submit" class="btn"><p>Sign-up</p></button>
+            <button id="return_btn" type="button" class="btn cancelbtn"><a class="link" href="/signin">Cancel</a></button>
           </div>
-        </div>
+
+          <p id="auth_msgReciever" class="hide auth_error">Default html</p>
+        </div> 
       </div>
     </form>
 

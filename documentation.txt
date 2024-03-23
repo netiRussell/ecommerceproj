@@ -5,3 +5,7 @@ Dynamic links:
 
 Checkout logic:
 - When buyer checks out, they provide their payment information. Then, some function is called that charges the buyer based on the information provided and if the charge was succesful, the function will adjust database accordingly (paid_by_buyer = 1 in the corresponding order)
+
+Database details:
+- Users table has "user_type" column that stands for account type. 0 = buyer, 1 = seller
+- Products table has "delivery_methods" and "categories" both of which are strings that are treated as arrays when data is being read and turned into html. Thus, convert array of data([data1, data2, data3, etc]) to string with syntax: data1&data2&data3&etc when need to save it to the database.

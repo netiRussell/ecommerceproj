@@ -4,6 +4,10 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.hide {
+  display: none;
+}
+
 .link {
   display: block;
   color: #ffffff;
@@ -22,26 +26,33 @@
 }
 
 .auth_container {
-  border: 0.2rem solid #ffae5d;
+  border: 4px solid #ffae5d;
   padding: 3rem;
   padding-left: 5rem;
   padding-right: 5rem;
   border-radius: 1.5rem;
   background-color: #fff;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .auth_inputs {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  width: 85%;
 }
 
 .auth_input {
   display: block;
   border: 1px solid #4d4d4d;
-  padding: 0.2rem;
+  padding: 0.3rem;
   padding-left: 0.4rem;
   padding-right: 0.4rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .auth_radios,
@@ -72,6 +83,19 @@
 
 .auth_text {
   font-size: 1.15rem;
+}
+
+.auth_error,
+.auth_success {
+  font-weight: 700;
+}
+
+.auth_error {
+  color: #ea1c1c;
+}
+
+.auth_success {
+  color: #12b625;
 }
 
 .auth_forgot {
