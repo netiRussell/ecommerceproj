@@ -79,7 +79,6 @@ if (document.URL.includes("signup")) {
           throw new Error("Server related problem(promise didn't come back)");
         }
 
-        // Error happens here. Most likely php error
         return data.json();
       });
 
@@ -101,4 +100,55 @@ if (document.URL.includes("signup")) {
 
     form.messageReciever.classList.remove("hide");
   }
+} else if (document.URL.includes("signin")) {
+  document.getElementById("signin_form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const form = {
+      uname: document.getElementById("signin_uname").value,
+      psw: document.getElementById("signin_psw").value,
+      messageReciever: document.getElementById("auth_msgReciever"),
+    };
+
+    singin(form);
+
+    async function singin(form) {
+      try {
+        const response = await send_request(`request=sign_in&uname=${form.uname}&psw=${form.psw}`).then((data) => {
+          if (!data.ok) {
+            throw new Error("Server related problem(promise didn't come back)");
+          }
+
+          return data.json();
+        });
+
+        if (response.status) {
+          // send_request(`request=init_session`).then((_) => {
+          //   window.location.reload();
+          // });
+
+          // TEST
+          const response2 = await send_request(`request=init_session`).then((data) => {
+            if (!data.ok) {
+              throw new Error("Server related problem(promise didn't come back)");
+            }
+
+            return data.json();
+          });
+
+          if (!response2.status) {
+            throw new Error(response2.message);
+          }
+        } else {
+          throw new Error(response.message);
+        }
+      } catch (error) {
+        form.messageReciever.classList.remove("auth_success");
+        form.messageReciever.classList.add("auth_error");
+        form.messageReciever.innerHTML = `${error}`;
+      }
+
+      form.messageReciever.classList.remove("hide");
+    }
+  });
 }

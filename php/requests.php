@@ -10,12 +10,11 @@ $request = isset($_POST['request']) ? $_POST['request'] : null;
 
 // Connect to DB
 include_once 'dbh_inc.php';
+$status = true;
+$message = "";
 
 switch($request){
   case "sign_up":
-      $status = true;
-      $message = "";
-    
       $fname = isset($_POST['fname']) && !empty($_POST['fname']) ? $_POST['fname'] : false;
       $lname = isset($_POST['lname']) && !empty($_POST['lname']) ? $_POST['lname'] : false;
       $uname = isset($_POST['uname']) && !empty($_POST['uname']) ? $_POST['uname'] : false;
@@ -74,6 +73,102 @@ switch($request){
       );
     break;
 
+    case "sign_in":
+      $uname = isset($_POST['uname']) ? $_POST['uname'] : '';
+      $psw = isset($_POST['psw']) ? $_POST['psw'] : '';
+
+      if( !isset($_POST['uname']) || empty($_POST['uname']) ){
+        $message = "Username cannot be empty! ";
+        $status = false;
+      }
+
+      if( !isset($_POST['psw']) || empty($_POST['psw']) ){
+        $message = "Password cannot be empty! ";
+        $status = false;
+      }
+
+      if($status){
+        $stmt = $conn->prepare("SELECT id, first_name, last_name, user_type, email, password, products_rated FROM users WHERE username=?");
+        $stmt->bind_param('s', $uname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Check on the case when uname doesn't exist
+        if($result->num_rows == 1) {
+          $data = $result->fetch_assoc();
+        }
+
+        if( !password_verify($psw, $data['password']) ){
+          $message = "Email or password are incorrect";
+          $status = false;
+
+          // Validation error
+          echo json_encode(
+            array(
+              'status' => $status,
+              'message' => $message
+            )
+          );
+        } else {
+          // Success
+          echo json_encode(
+            array(
+              'status' => $status,
+              'id' => $data['id'],
+              'user_type' => $data['user_type'],
+              'first_name' => $data['first_name'],
+              'last_name' => $data['last_name'],
+              'email' => $data['email'],
+              'products_rated' => $data['products_rated']
+            )
+          );
+        }
+      } else{
+        // Error before validation  
+        echo json_encode(
+          array(
+            'status' => $status,
+            'message' => $message
+          )
+        );
+      }
+  break;
+
+  case "init_session":
+    $status = false;
+    $message = "Session is initiated";
+
+    echo json_encode(
+      array(
+        'status' => $status,
+        'message' => $message
+      )
+    );
+  break;
+
+  case "delete_session":
+    $_SESSION = array();
+
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    session_destroy();
+  break;
+
   default:
+    $status = false;
+    $message = "There is no such request";
+
+    echo json_encode(
+      array(
+        'status' => $status,
+        'message' => $message
+      )
+    );
     break;
 }
