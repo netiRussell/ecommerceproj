@@ -101,34 +101,23 @@ if (document.URL.includes("signup")) {
     form.messageReciever.classList.remove("hide");
   }
 } else if (document.URL.includes("signin")) {
-  document.getElementById("signin_form").addEventListener("submit", function (event) {
-    event.preventDefault();
+  const formDOM = document.getElementById("signin_form");
 
-    const form = {
-      uname: document.getElementById("signin_uname").value,
-      psw: document.getElementById("signin_psw").value,
-      messageReciever: document.getElementById("auth_msgReciever"),
-    };
+  if (formDOM) {
+    formDOM.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-    singin(form);
+      const form = {
+        uname: document.getElementById("signin_uname").value,
+        psw: document.getElementById("signin_psw").value,
+        messageReciever: document.getElementById("auth_msgReciever"),
+      };
 
-    async function singin(form) {
-      try {
-        const response = await send_request(`request=sign_in&uname=${form.uname}&psw=${form.psw}`).then((data) => {
-          if (!data.ok) {
-            throw new Error("Server related problem(promise didn't come back)");
-          }
+      singin(form);
 
-          return data.json();
-        });
-
-        if (response.status) {
-          // send_request(`request=init_session`).then((_) => {
-          //   window.location.reload();
-          // });
-
-          // TEST
-          const response2 = await send_request(`request=init_session`).then((data) => {
+      async function singin(form) {
+        try {
+          const response = await send_request(`request=sign_in&uname=${form.uname}&psw=${form.psw}`).then((data) => {
             if (!data.ok) {
               throw new Error("Server related problem(promise didn't come back)");
             }
@@ -136,19 +125,55 @@ if (document.URL.includes("signup")) {
             return data.json();
           });
 
-          if (!response2.status) {
-            throw new Error(response2.message);
+          if (response.status) {
+            send_request(`request=init_session&id=${response.id}&user_type=${response.user_type}&first_name=${response.first_name}&last_name=${response.last_name}&email=${response.email}&products_rated=${response.products_rated}`).then((_) => {
+              window.location.reload();
+            });
+          } else {
+            throw new Error(response.message);
           }
-        } else {
-          throw new Error(response.message);
+        } catch (error) {
+          form.messageReciever.classList.remove("auth_success");
+          form.messageReciever.classList.add("auth_error");
+          form.messageReciever.innerHTML = `${error}`;
         }
-      } catch (error) {
-        form.messageReciever.classList.remove("auth_success");
-        form.messageReciever.classList.add("auth_error");
-        form.messageReciever.innerHTML = `${error}`;
+
+        form.messageReciever.classList.remove("hide");
+      }
+    });
+  } else {
+    document.getElementById("signout_form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      async function signout() {
+        const messageReciever = document.getElementById("auth_msgReciever");
+
+        try {
+          const response = await send_request(`request=delete_session`).then((data) => {
+            if (!data.ok) {
+              throw new Error("Server related problem(promise didn't come back)");
+            }
+
+            return data.json();
+          });
+
+          if (response.status) {
+            window.location.reload(); // ! Redirect to home page
+            // ! Fix JSON error
+            // ! Fix "Cookie “PHPSESSID” does not have a proper “SameSite” attribute value. Soon, cookies without the “SameSite” attribute or with an invalid value will be treated as “Lax”. This means that the cookie will no longer be sent in third-party contexts. If your application depends on this cookie being available in such contexts, please add the “SameSite=None“ attribute to it. To know more about the “SameSite“ attribute, read https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie/SameSite"
+          } else {
+            throw new Error("Something went wrong");
+          }
+        } catch (error) {
+          messageReciever.classList.remove("auth_success");
+          messageReciever.classList.add("auth_error");
+          messageReciever.innerHTML = `${error}`;
+        }
+
+        messageReciever.classList.remove("hide");
       }
 
-      form.messageReciever.classList.remove("hide");
-    }
-  });
+      signout();
+    });
+  }
 }

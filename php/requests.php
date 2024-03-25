@@ -96,10 +96,21 @@ switch($request){
         // Check on the case when uname doesn't exist
         if($result->num_rows == 1) {
           $data = $result->fetch_assoc();
+        } else {
+          $message = "There is no such user";
+          $status = false;
+
+          echo json_encode(
+            array(
+              'status' => $status,
+              'message' => $message
+            )
+          );
+          return;
         }
 
         if( !password_verify($psw, $data['password']) ){
-          $message = "Email or password are incorrect";
+          $message = "Password is incorrect";
           $status = false;
 
           // Validation error
@@ -135,15 +146,12 @@ switch($request){
   break;
 
   case "init_session":
-    $status = false;
-    $message = "Session is initiated";
-
-    echo json_encode(
-      array(
-        'status' => $status,
-        'message' => $message
-      )
-    );
+    $_SESSION['id'] = $_POST['id'];
+    $_SESSION['user_type'] = $_POST['user_type'];
+    $_SESSION['first_name'] = $_POST['first_name'];
+    $_SESSION['last_name'] = $_POST['last_name'];
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['products_rated'] = $_POST['products_rated'];
   break;
 
   case "delete_session":

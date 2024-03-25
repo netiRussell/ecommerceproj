@@ -9,3 +9,6 @@ Checkout logic:
 Database details:
 - Users table has "user_type" column that stands for account type. 0 = buyer, 1 = seller
 - Products table has "delivery_methods" and "categories" both of which are strings that are treated as arrays when data is being read and turned into html. Thus, convert array of data([data1, data2, data3, etc]) to string with syntax: data1&data2&data3&etc when need to save it to the database.
+
+Sign-in details:
+- When a user signs-in, the system validates username and passwors and only then a second promise is being sent from JS to initiate a php session. THERE IS NO CUSTOM ERROR DETECTION FOR INITIATING PHP SESSION(thus, if you encounter sign-in error, don't forget to also troubleshoot the sessions initiation in requests.php)
