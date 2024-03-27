@@ -149,21 +149,14 @@ if (document.URL.includes("signup")) {
         const messageReciever = document.getElementById("auth_msgReciever");
 
         try {
-          const response = await send_request(`request=delete_session`).then((data) => {
+          await send_request(`request=delete_session`).then((data) => {
             if (!data.ok) {
               throw new Error("Server related problem(promise didn't come back)");
             }
-
-            return data.json();
           });
 
-          if (response.status) {
-            window.location.reload(); // ! Redirect to home page
-            // ! Fix JSON error
-            // ! Fix "Cookie “PHPSESSID” does not have a proper “SameSite” attribute value. Soon, cookies without the “SameSite” attribute or with an invalid value will be treated as “Lax”. This means that the cookie will no longer be sent in third-party contexts. If your application depends on this cookie being available in such contexts, please add the “SameSite=None“ attribute to it. To know more about the “SameSite“ attribute, read https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie/SameSite"
-          } else {
-            throw new Error("Something went wrong");
-          }
+          // Refer to the home page
+          document.location.href = "/";
         } catch (error) {
           messageReciever.classList.remove("auth_success");
           messageReciever.classList.add("auth_error");
